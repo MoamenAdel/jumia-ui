@@ -1,18 +1,33 @@
-import { NgModule } from '@angular/core';
+
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+ 
 import { AppComponent } from './app.component';
+import { CustomerComponent } from './customer/customer.component';
+import { AppRoutingModule } from './app-routing.module';
+import {CustomerService} from './customer/customer.service';
+import {HttpClientModule} from "@angular/common/http";
 
+import {DataTablesModule} from 'angular-datatables';
+import 'rxjs/add/operator/map';
+ 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CustomerComponent
+    
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    DataTablesModule,
+    
+
   ],
-  providers: [],
+  providers: [CustomerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
