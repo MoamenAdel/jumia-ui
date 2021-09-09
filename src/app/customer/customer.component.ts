@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 
-import { Customer } from '../models/Customer.model';
+import { Customer } from '../models/customer.model';
 import { CustomerService } from './customer.service';
 import { Subject } from 'rxjs';
 import 'rxjs/add/operator/map';
@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-Customer',
-  templateUrl: './Customer.component.html',
+  templateUrl: './customer.component.html',
   styles: []
 })
 export class CustomerComponent implements OnDestroy, OnInit {
