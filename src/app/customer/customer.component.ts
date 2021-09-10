@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 
@@ -6,6 +6,9 @@ import { Customer } from '../models/customer.model';
 import { CustomerService } from './customer.service';
 import { Subject } from 'rxjs';
 import 'rxjs/add/operator/map';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 
 
 @Component({
@@ -13,40 +16,44 @@ import 'rxjs/add/operator/map';
   templateUrl: './customer.component.html',
   styles: []
 })
-export class CustomerComponent implements OnDestroy, OnInit {
+export class CustomerComponent implements OnInit, AfterViewInit {
 
   customers: Customer[] | undefined;
 
   countryName: string;
 
-  dtTrigger: Subject<any> = new Subject<any>();
-  dtOptions: DataTables.Settings = {};
+  dataSource = new MatTableDataSource<Customer>();
+
+  displayedColumns: string[] = ['name', 'countryName', 'countryCode', 'phoneNumber', 'valid'];
+
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private router: Router, private CustomerService: CustomerService) {
 
   }
-  searchByName(){
+
+  searchByName() {
     this.CustomerService.getCustomersByCountryName(this.countryName)
       .subscribe(data => {
-        this.customers = data;
-        // this.dtTrigger.next();
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.paginator = this.paginator;
       });
   }
-  ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe();
-  }
+
 
   ngOnInit() {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10
-    };
+
     this.CustomerService.getCustomers()
       .subscribe(data => {
-        this.customers = data;
-        this.dtTrigger.next();
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.paginator = this.paginator;
       });
-  };
+  }
+  ngAfterViewInit() {
+   
+  }
 
-  
+
+
 }

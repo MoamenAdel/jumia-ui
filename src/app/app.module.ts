@@ -11,6 +11,9 @@ import {HttpClientModule} from "@angular/common/http";
 
 import {DataTablesModule} from 'angular-datatables';
 import 'rxjs/add/operator/map';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table' 
+import { MatPaginatorModule } from '@angular/material/paginator';
  
 @NgModule({
   declarations: [
@@ -24,6 +27,9 @@ import 'rxjs/add/operator/map';
     HttpClientModule,
     FormsModule,
     DataTablesModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
     
 
   ],

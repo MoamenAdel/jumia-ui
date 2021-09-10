@@ -1,33 +1,7 @@
 <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center">
   <h2> Customer Details</h2>
   <form #userForm="ngForm" (ngSubmit)="searchByName()">
-    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped">
-      <thead>
-        <tr>
-
-          <th>Name</th>
-          <th> Country Name</th>
-          <th> Country Code</th>
-          <th>Phone</th>
-          <th>Valid</th>
-
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let customer of customers">
-
-          <td>{{customer.name}}</td>
-          <td>{{customer.countryName}}</td>
-          <td>{{customer.countryCode}}</td>
-          <td>{{customer.phoneNumber}}</td>
-          <td *ngIf="customer.valid"><img style="width:10px;height:10px;" src="assets/img/valid.png" /></td>
-          <td *ngIf="! customer.valid"><img style="width:10px;height:10px;" src="assets/img/invalid.jpg" /></td>
-        </tr>
-      </tbody>
-    </table>
-
-
-    <div class="container">
+    <div class="p-2 bg-light border">
       <div class="row">
         <div class="col-sm">
           <input type="text" [(ngModel)]="countryName" name="countryName" class="form-control" />
@@ -37,6 +11,46 @@
         </div>
       </div>
     </div>
+    <div class="container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort   class="table table-striped">
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let customer"> {{customer.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="countryName">
+        <th mat-header-cell *matHeaderCellDef> Country Name </th>
+        <td mat-cell *matCellDef="let customer"> {{customer.countryName}} </td>
+      </ng-container>
+      <ng-container matColumnDef="countryCode">
+        <th mat-header-cell *matHeaderCellDef> Country Code </th>
+        <td mat-cell *matCellDef="let customer"> {{customer.countryCode}} </td>
+      </ng-container>
+      <ng-container matColumnDef="phoneNumber">
+        <th mat-header-cell *matHeaderCellDef> Phone Number </th>
+        <td mat-cell *matCellDef="let customer"> {{customer.phoneNumber}} </td>
+      </ng-container>
+      <ng-container matColumnDef="valid">
+        <th mat-header-cell *matHeaderCellDef> Valid </th>
+
+        <ng-container *matCellDef="let customer">
+          <td mat-cell *ngIf="customer.valid"> <img style="width:10px;height:10px;" src="assets/img/valid.png" />
+          </td>
+          <td mat-cell *ngIf="! customer.valid"> <img style="width:10px;height:10px;" src="assets/img/invalid.jpg" />
+          </td>
+        </ng-container>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+    
+    <mat-paginator [length]="100" [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons  aria-label="Select page">
+    </mat-paginator>
+
+  </div>
   </form>
 
 </div>
